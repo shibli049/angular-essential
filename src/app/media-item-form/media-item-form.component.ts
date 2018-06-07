@@ -36,11 +36,13 @@ export class MediaItemFormComponent implements OnInit {
     }
 
     const year = parseInt(control.value, 10);
+    const min = 1900;
+    const max = 2100;
     if (year >= 1900 && year <= 2100) {
       return null;
     }
 
-    return {'year' : 'invalid'};
+    return {'year' : `invalid input, year must be between ${min} and ${max}`};
 
   }
 }
