@@ -1,56 +1,22 @@
 import { Injectable } from '@angular/core';
+import { Http, URLSearchParams } from '@angular/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MediaItemService {
+  mediaItems = [];
 
-  mediaItems = [
-    {
-      id: 1,
-      name: 'Firebug',
-      medium: 'Series',
-      category: 'Science Fiction',
-      year: 2010,
-      watchedOn: 1294166565384,
-      isFavorite: false
-    },
-    {
-      id: 2,
-      name: 'The Small Tall',
-      medium: 'Movies',
-      category: 'Comedy',
-      year: 2015,
-      watchedOn: null,
-      isFavorite: true
-    }, {
-      id: 3,
-      name: 'The Redemption',
-      medium: 'Movies',
-      category: 'Action',
-      year: 2016,
-      watchedOn: null,
-      isFavorite: false
-    }, {
-      id: 4,
-      name: 'Hoopers',
-      medium: 'Series',
-      category: 'Drama',
-      year: null,
-      watchedOn: 1457166565384,
-      isFavorite: true
-    }, {
-      id: 5,
-      name: 'Happy Joe: Cheery Road',
-      medium: 'Movies',
-      category: 'Action',
-      year: 2015,
-      isFavorite: false
-    }
-  ];
+  constructor(private http: Http) {}
 
-  get() {
-    return this.mediaItems;
+  get(medium) {
+    const searchParams = new URLSearchParams();
+    searchParams.append('medium', medium);
+    return this.http.get('mediaitems', { search: searchParams }).pipe(
+      map(response => {
+        return response.json().mediaItems;
+      })
+    );
   }
 
   add(mediaItem) {
@@ -59,10 +25,22 @@ export class MediaItemService {
 
   delete(mediaItem) {
     const index = this.mediaItems.indexOf(mediaItem);
-    if(index >= 0) {
+    if (index >= 0) {
       this.mediaItems.splice(index, 1);
     }
   }
+}
 
-  constructor() { }
+interface MediaItem {
+  id: number;
+  name: string;
+  medium: string;
+  category: string;
+  year: number;
+  watchedOn: number;
+  isFavorite: boolean;
+}
+
+interface MediaItemResponse {
+  mediaItems: MediaItem[];
 }
