@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class MediaItemService {
-  mediaItems = [];
 
   constructor(private http: Http) {}
 
@@ -20,14 +19,11 @@ export class MediaItemService {
   }
 
   add(mediaItem) {
-    this.mediaItems.push(mediaItem);
+    return this.http.post('mediaitems', mediaItem);
   }
 
-  delete(mediaItem) {
-    const index = this.mediaItems.indexOf(mediaItem);
-    if (index >= 0) {
-      this.mediaItems.splice(index, 1);
-    }
+  delete(mediaItem: MediaItem) {
+    return this.http.delete(`mediaitems/${mediaItem.id}`);
   }
 }
 

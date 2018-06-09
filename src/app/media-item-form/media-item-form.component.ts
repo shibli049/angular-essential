@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { MediaItemService } from '../media-item.service';
 import { lookupLists } from '../providers';
@@ -16,7 +17,8 @@ export class MediaItemFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private mediaItemService: MediaItemService,
-    @Inject(lookupLists) public lookupLists
+    @Inject(lookupLists) public lookupLists,
+    private router: Router
   ) {
    }
 
@@ -34,8 +36,9 @@ export class MediaItemFormComponent implements OnInit {
 
 
   onSubmit(mediaItem) {
-    // console.log(mediaItem);
-    this.mediaItemService.add(mediaItem);
+    this.mediaItemService.add(mediaItem).subscribe(() => {
+      this.router.navigate(['/', mediaItem.medium]);
+    });
   }
 
   // validator return null when valid, else return an object

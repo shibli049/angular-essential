@@ -12,6 +12,7 @@ import { MediaItemFormComponent } from './media-item-form/media-item-form.compon
 import { MediaItemService } from './media-item.service';
 import {  lookupLists, LOOKUP_LISTS } from './providers';
 import { MockXHRBackend } from './mock-xhr-backend';
+import { routing } from './app.routes';
 
 
 
@@ -27,7 +28,8 @@ import { MockXHRBackend } from './mock-xhr-backend';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    routing
   ],
   // to make services available to angular modules
   providers: [
