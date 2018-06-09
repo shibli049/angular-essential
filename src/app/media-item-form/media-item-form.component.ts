@@ -17,7 +17,7 @@ export class MediaItemFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private mediaItemService: MediaItemService,
-    @Inject(lookupLists) public lookupLists,
+    @Inject(lookupLists) private lookupLists,
     private router: Router
   ) {
    }
